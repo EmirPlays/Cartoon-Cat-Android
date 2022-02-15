@@ -18,8 +18,8 @@ typedef ReplayJSON =
     public var songName:String;
     public var songDiff:Int;
     public var songNotes:Array<Float>;
-	public var noteSpeed:Float;
-	public var isDownscroll:Bool;
+    public var noteSpeed:Float;
+    public var isDownscroll:Bool;
 }
 
 class Replay
@@ -34,9 +34,9 @@ class Replay
         replay = {
             songName: "Tutorial", 
             songDiff: 1,
-			noteSpeed: 1.5,
-			isDownscroll: false,
-			songNotes: [],
+	    noteSpeed: 1.5,
+	    isDownscroll: false,
+            songNotes: [],
             replayGameVer: version,
             timestamp: Date.now()
         };
@@ -68,17 +68,17 @@ class Replay
         var data:String = Json.stringify(json);
 
         #if sys
-        File.saveContent("assets/replays/replay-" + PlayState.SONG.song + "-time" + Date.now().getTime() + ".kadeReplay", data);
+        File.saveContent(SUtil.getPath() + "assets/replays/replay-" + PlayState.SONG.song + "-time" + Date.now().getTime() + ".kadeReplay", data);
         #end
     }
 
     public function LoadFromJSON()
     {
         #if sys
-        trace('loading ' + Sys.getCwd() + 'assets/replays/' + path + ' replay...');
+        trace('loading ' + SUtil.getPath() +  'assets/replays/' + path + ' replay...');
         try
         {
-            var repl:ReplayJSON = cast Json.parse(File.getContent(Sys.getCwd() + "assets/replays/" + path));
+            var repl:ReplayJSON = cast Json.parse(File.getContent(SUtil.getPath() + "assets/replays/" + path));
             replay = repl;
         }
         catch(e)
