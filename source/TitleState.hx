@@ -51,20 +51,20 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{	
+                #if android
+		FlxG.android.preventDefaultKeys = [BACK];
+		#end
+
 		@:privateAccess
 		{
 			trace("Loaded " + openfl.Assets.getLibrary("default").assetsLoaded + " assets (DEFAULT)");
 		}
-		
-		#if !cpp
 
 		FlxG.save.bind('funkin', 'ninjamuffin99');
 
 		PlayerSettings.init();
 
 		KadeEngineData.initSave();
-		
-		#end
 
 		Highscore.load();
 
@@ -73,7 +73,7 @@ class TitleState extends MusicBeatState
 
 		Application.current.onExit.add (function (exitCode) {
 			DiscordClient.shutdown();
-		 });
+		});
 		 
 		#end
 
@@ -82,13 +82,6 @@ class TitleState extends MusicBeatState
 		// DEBUG BULLSHIT
 
 		super.create();
-
-		// NGio.noLogin(APIStuff.API);
-
-		#if ng
-		var ng:NGio = new NGio(APIStuff.API, APIStuff.EncKey);
-		trace('NEWGROUNDS LOL');
-		#end
 
 		#if FREEPLAY
 		FlxG.switchState(new FreeplayState());
