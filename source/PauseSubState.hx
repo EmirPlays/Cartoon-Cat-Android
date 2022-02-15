@@ -75,7 +75,7 @@ class PauseSubState extends MusicBeatSubstate
 		perSongOffset.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		
 		#if cpp
-			add(perSongOffset);
+		add(perSongOffset);
 		#end
 
 		for (i in 0...menuItems.length)
@@ -104,7 +104,7 @@ class PauseSubState extends MusicBeatSubstate
 		var rightP = controls.RIGHT_P;
 		var accepted = controls.ACCEPT;
 		var oldOffset:Float = 0;
-		var songPath = 'assets/data/' + PlayState.SONG.song.toLowerCase() + '/';
+		var songPath = SUtil.getPath() + 'assets/data/' + PlayState.SONG.song.toLowerCase() + '/';
 
 		if (upP)
 		{
