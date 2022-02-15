@@ -57,12 +57,12 @@ class Paths
 
 	inline static public function lua(key:String,?library:String)
 	{
-		return getPath('data/$key.lua', TEXT, library);
+		return SUtil.getPath() + 'assets/data/$key.lua';
 	}
 
 	inline static public function luaImage(key:String, ?library:String)
 	{
-		return getPath('data/$key.png', IMAGE, library);
+		return SUtil.getPath() + 'assets/data/$key.png';
 	}
 
 	inline static public function txt(key:String, ?library:String)
@@ -92,7 +92,7 @@ class Paths
 
 	inline static public function video(key:String, ?library:String)
 	{
-		return getPath('videos/$key.mp4', BINARY, library);
+		return SUtil.getPath() + 'assets/videos/$key.mp4';
 	}
 
 	inline static public function music(key:String, ?library:String)
