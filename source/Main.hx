@@ -37,7 +37,7 @@ class Main extends Sprite
 	{
 		super();
 
-                SUtil.gameCrashCheck()
+                SUtil.gameCrashCheck();
                 //now I will see why the game crashes :)
 
 		if (stage != null)
