@@ -3,7 +3,6 @@ package;
 #if android
 import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
-import openfl.Lib;
 import sys.FileSystem;
 import sys.io.File;
 import Sys;
@@ -74,13 +73,6 @@ class SUtil
     }
 
     //Thanks Forever Engine
-    static public function gameCrashCheck():Void
-    {
-        #if android
-    	Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
-        #end
-    }
-
     static public function onCrash(e:UncaughtErrorEvent):Void
     {
         #if android
@@ -105,17 +97,16 @@ class SUtil
 		}
 	}
 
-	errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/Yoshubs/Forever-Engine";
-
 	if (!FileSystem.exists(SUtil.getPath() + "gamelog"))
 		FileSystem.createDirectory(SUtil.getPath() + "gamelog");
 
 	File.saveContent(SUtil.getPath() + path, errMsg + "\n");
 
 	Sys.println(errMsg);
-	Sys.println("Crash dump saved in " + Path.normalize(path));
+	Sys.println("Crash log saved in " + Path.normalize(path));
 
-	Application.current.window.alert(errMsg, "Error!");
+	Application.current.window.alert(errMsg, "Error Found");
+
 	Sys.exit(1);
         #end
      }
