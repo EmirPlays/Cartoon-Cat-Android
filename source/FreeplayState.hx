@@ -96,6 +96,8 @@ class FreeplayState extends MusicBeatState
 		changeSelection();
 		changeDiff();
 
+                addVirtualPad(FULL, A_B);
+
 		super.create();
 	}
 
