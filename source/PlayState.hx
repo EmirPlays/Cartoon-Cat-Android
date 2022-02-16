@@ -2376,7 +2376,7 @@ class PlayState extends MusicBeatState
                 var video = new FlxVideo(Paths.video(name));                                                     
                 video.finishCallback = function() {    
                         remove(bg);   
-                        onComplete()                                                                                              
+                        onComplete();                                                                                      
                 }
 	}
 }
