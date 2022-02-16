@@ -2372,17 +2372,11 @@ class PlayState extends MusicBeatState
 		bg.screenCenter();
 		bg.cameras = [camHUD];
 		add(bg);
-		
-		var video:FlxVideo = new FlxVideo(Paths.video(name));
 
-		new FlxTimer().start(1.2, function(tmr:FlxTimer)
-		{
-			remove(bg);
-		});
-
-		video.finishCallback = function()
-		{
-			onComplete();
-		}
+                var video = new FlxVideo(Paths.video(name));                                                     
+                video.finishCallback = function() {    
+                        remove(bg);   
+                        onComplete()                                                                                              
+                }
 	}
 }
