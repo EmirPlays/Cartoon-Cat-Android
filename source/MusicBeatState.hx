@@ -13,9 +13,14 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.ui.FlxUIState;
 import flixel.math.FlxRect;
 import flixel.util.FlxTimer;
-
 import openfl.utils.Assets;
 import openfl.utils.AssetType;
+#if android
+import flixel.input.actions.FlxActionInput;
+import ui.AndroidControls.AndroidControlsSetup;
+import ui.FlxVirtualPad;
+#end
+
 
 class MusicBeatState extends FlxUIState
 {
@@ -31,6 +36,65 @@ class MusicBeatState extends FlxUIState
 
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
+
+        #if android
+	var _virtualpad:FlxVirtualPad;
+	var androidc:AndroidControlsSetup;
+	var trackedinputsUI:Array<FlxActionInput> = [];
+	#end
+	
+	public function addVirtualPad(?DPad:FlxDPadMode, ?Action:FlxActionMode) {
+		#if android
+		_virtualpad = new FlxVirtualPad(DPad, Action);
+		_virtualpad.alpha = 0.75;
+		add(_virtualpad);
+		controls.setVirtualPad(_virtualpad, DPad, Action);
+		trackedinputs = controls.trackedinputs;
+		controls.trackedinputs = [];
+		#end
+	}
+
+	public function addAndroidControls() {
+                androidc = new AndroidControlsSetup();
+
+		switch (androidc.mode)
+		{
+			case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
+				controls.setVirtualPad(androidc._virtualPad, FULL, NONE);
+			case HITBOX:
+				controls.setHitBox(androidc._hitbox);
+			default:
+		}
+
+		trackedinputs = controls.trackedinputs;
+		controls.trackedinputs = [];
+
+                var camcontrol = new flixel.FlxCamera();
+                FlxG.cameras.add(camcontrol);
+                camcontrol.bgColor.alpha = 0;
+		androidc.cameras = [camcontrol];
+
+		androidc.visible = false;
+
+		add(androidc);
+	}
+
+        public function addPadCamera() {
+		#if android
+		var camcontrol = new flixel.FlxCamera();
+		FlxG.cameras.add(camcontrol);
+		camcontrol.bgColor.alpha = 0;
+		_virtualpad.cameras = [camcontrol];
+		#end
+	}
+	
+	override function destroy() {
+		#if android
+		controls.removeFlxInput(trackedinputs);
+		#end	
+		
+		super.destroy();
+	}
 
 	override function create()
 	{
