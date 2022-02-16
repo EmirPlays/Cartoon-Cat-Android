@@ -85,7 +85,7 @@ class CastomAndroidControls extends MusicBeatState
 		inputvari.screenCenter(X);
 		add(inputvari);
 
-		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
+		var ui_tex = Paths.getSparrowAtlas('androidcontrols/arrows');//thanks Andromeda Engine
 
 		leftArrow = new FlxSprite(inputvari.x - 60,inputvari.y - 10);
 		leftArrow.frames = ui_tex;
