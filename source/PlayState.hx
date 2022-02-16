@@ -468,6 +468,8 @@ class PlayState extends MusicBeatState
 			songPosBar.cameras = [camHUD];
 		}
 
+                addAndroidControls();
+
 		startingSong = true;
 		
 		if (isStoryMode)
@@ -501,6 +503,10 @@ class PlayState extends MusicBeatState
 	{
 		inCutscene = false;
 		camHUD.visible = true;
+
+                #if android
+                androidc.visible = true;
+                #end
 
 		#if cpp
 		if (executeModchart)
@@ -1038,7 +1044,7 @@ class PlayState extends MusicBeatState
 		if (!FlxG.save.data.accuracyDisplay)
 			scoreTxt.text = "Score: " + songScore;
 
-		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
+		if (FlxG.keys.justPressed.ENTER #if android || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
 			persistentDraw = true;
