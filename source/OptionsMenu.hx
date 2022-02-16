@@ -32,6 +32,9 @@ class OptionsMenu extends MusicBeatState
 		]),
 		new OptionCategory("Gameplay", [
 			new DFJKOption(controls),
+                        #if android
+                        new AndroidControls("Castomize your controls"),
+                        #end
 			new DownscrollOption("Change the layout of the strumline."),
 			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
 			new Judgement("Customize your Hit Timings (LEFT or RIGHT)"),
@@ -43,7 +46,9 @@ class OptionsMenu extends MusicBeatState
 		]),
 		new OptionCategory("Appearance", [
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
+                        #if !mobile
 			new RainbowFPSOption("Make the FPS Counter Rainbow"),
+                        #end
 			new AccuracyOption("Display accuracy information."),
 			new NPSDisplayOption("Shows your current Notes Per Second."),
 			new SongPositionOption("Show the songs current position (as a bar)"),
