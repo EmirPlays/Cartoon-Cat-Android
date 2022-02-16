@@ -37,7 +37,9 @@ class Main extends Sprite
 	{
 		super();
 
-                SUtil.gameCrashCheck();//now I will see why the game crashes :)
+                #if android
+    	        Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, SUtil.onCrash);
+                #end//now I will see why the game crashes :)
 
 		if (stage != null)
 		{
