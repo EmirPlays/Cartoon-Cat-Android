@@ -592,3 +592,24 @@ class OffsetMenu extends Option
 		return "Time your offset";
 	}
 }
+
+class AndroidControls extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		trace("switch");
+		FlxG.switchState(new CastomAndroidControls());
+		return false;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Android Controls";
+	}
+}
