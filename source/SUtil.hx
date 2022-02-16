@@ -1,9 +1,15 @@
 package;
 
 #if android
-import sys.FileSystem;
 import lime.app.Application;
-import flash.system.System;
+import openfl.events.UncaughtErrorEvent;
+import openfl.Lib;
+import sys.FileSystem;
+import sys.io.File;
+import Sys;
+import haxe.CallStack.StackItem;
+import haxe.CallStack;
+import haxe.io.Path;
 import android.*;
 #end
 
@@ -62,8 +68,56 @@ class SUtil
         if (!FileSystem.exists(SUtil.getPath() + "assets"))
         {
                 Application.current.window.alert("Try copying assets/assets from apk to your internal storage app directory " + "( here " + SUtil.getPath() + " )" + "\n" + "Press Ok To Close The App", "Instructions");
-                System.exit(0);//Will close the game
+                Sys.exit(1);//Will close the game
         }
         #end
     }
+
+    //Thanks Forever Engine
+    static public function gameCrashCheck():String
+    {
+        #if android
+    	Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
+        #end
+    }
+
+    function onCrash(e:UncaughtErrorEvent):Void
+    {
+        #if android
+	var errMsg:String = "";
+	var path:String;
+	var callStack:Array<StackItem> = CallStack.exceptionStack(true);
+	var dateNow:String = Date.now().toString();
+
+	dateNow = StringTools.replace(dateNow, " ", "_");
+	dateNow = StringTools.replace(dateNow, ":", "'");
+
+	path = "gamelog/" + "gamelog_" + dateNow + ".txt";
+
+	for (stackItem in callStack)
+	{
+		switch (stackItem)
+		{
+			case FilePos(s, file, line, column):
+				errMsg += file + " (line " + line + ")\n";
+			default:
+				Sys.println(stackItem);
+		}
+	}
+
+	errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/Yoshubs/Forever-Engine";
+
+	if (!FileSystem.exists(SUtil.getPath() + "gamelog"))
+		FileSystem.createDirectory(SUtil.getPath() + "gamelog");
+
+	File.saveContent(SUtil.getPath() + path, errMsg + "\n");
+
+	Sys.println(errMsg);
+	Sys.println("Crash dump saved in " + Path.normalize(path));
+
+	Sys.println("No crash dialog found! Making a simple alert instead...");
+	Application.current.window.alert(errMsg, "Error!");
+	Sys.exit(1);
+        #end
+     }
 }
