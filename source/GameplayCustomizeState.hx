@@ -86,11 +86,13 @@ class GameplayCustomizeState extends MusicBeatState
         sick.y = FlxG.save.data.changedHitY;
 
         FlxG.mouse.visible = true;
+
+        addVirtualPad(FULL, A_B_X_Y);
     }
 
     override function update(elapsed:Float) {
-		if (FlxG.sound.music != null)
-			Conductor.songPosition = FlxG.sound.music.time;
+	if (FlxG.sound.music != null)
+		Conductor.songPosition = FlxG.sound.music.time;
 
         super.update(elapsed);
 
@@ -101,18 +103,18 @@ class GameplayCustomizeState extends MusicBeatState
 
         var multiplier:Float = 1;
 
-        if (FlxG.keys.pressed.SHIFT)
+        if (FlxG.keys.pressed.SHIFT #if android || _virtualpad.buttonX.pressed #end)
             multiplier = 5;
-        if (FlxG.keys.pressed.UP)
+        if (controls.UP)
             sick.y -= 1 * multiplier;
-        if (FlxG.keys.pressed.DOWN)
+        if (controls.DOWN)
             sick.y += 1 * multiplier;
-        if (FlxG.keys.pressed.LEFT)
+        if (controls.LEFT)
             sick.x -= 1 * multiplier;
-        if (FlxG.keys.pressed.RIGHT)
+        if (controls.RIGHT)
             sick.x += 1 * multiplier;
 
-        if (FlxG.keys.justPressed.ENTER && (FlxG.save.data.changedHitX != sick.x || FlxG.save.data.changeHitY != sick.y))
+        if (controls.ACCEPT && (FlxG.save.data.changedHitX != sick.x || FlxG.save.data.changeHitY != sick.y))
         {
             FlxG.sound.play(Paths.sound('confirmMenu'));
             FlxG.save.data.changedHitX = sick.x;
@@ -120,7 +122,7 @@ class GameplayCustomizeState extends MusicBeatState
             FlxG.save.data.changedHit = true;            
         }
 
-        if (FlxG.keys.justPressed.R)
+        if (controls.RESET #if android || _virtualpad.buttonY.pressed #end)
         {
             sick.x = defaultX;
             sick.y = defaultY;
@@ -133,7 +135,7 @@ class GameplayCustomizeState extends MusicBeatState
         {
             FlxG.mouse.visible = false;
             FlxG.sound.play(Paths.sound('cancelMenu'));
-			FlxG.switchState(new OptionsMenu());
+	    FlxG.switchState(new OptionsMenu());
         }
 
     }
