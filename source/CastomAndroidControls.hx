@@ -52,7 +52,6 @@ class CastomAndroidControls extends MusicBeatState
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
-		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
 		add(menuBG);
 
     	        var exitbutton = new FlxButton(FlxG.width - 200, 50, "Exit", function()
