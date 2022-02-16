@@ -74,14 +74,14 @@ class SUtil
     }
 
     //Thanks Forever Engine
-    public function gameCrashCheck():String
+    static public function gameCrashCheck()
     {
         #if android
     	Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
         #end
     }
 
-    function onCrash(e:UncaughtErrorEvent):Void
+    static public function onCrash(e:UncaughtErrorEvent):Void
     {
         #if android
 	var errMsg:String = "";
