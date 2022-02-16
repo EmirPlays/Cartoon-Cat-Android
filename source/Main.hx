@@ -12,9 +12,6 @@ import openfl.Lib;
 import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
-#if android
-import openfl.events.UncaughtErrorEvent;
-#end
 
 class Main extends Sprite
 {
@@ -40,9 +37,8 @@ class Main extends Sprite
 	{
 		super();
 
-                #if android
-    	        Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, SUtil.onCrash);
-                #end//now I will see why the game crashes :)
+                SUtil.gameCrashCheck()
+                //now I will see why the game crashes :)
 
 		if (stage != null)
 		{
