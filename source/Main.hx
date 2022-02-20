@@ -85,11 +85,9 @@ class Main extends Sprite
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
 		addChild(game);
 
-		#if !mobile//because of extension webview I will not add it for now on to look good :)
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter);
 		toggleFPS(FlxG.save.data.fps);
-		#end
 	}
 
 	var game:FlxGame;
