@@ -14,7 +14,7 @@ class FlxVideo extends FlxBasic {
 		#if android
 		WebView.onClose=onClose;
 		WebView.onURLChanging=onURLChanging;
-		WebView.open(AndroidTools.getFileUrl(name), false, null, ['http://exitme(.*)']);
+		WebView.open(AndroidTools.getFileUrl(name), null, ['http://exitme(.*)']);
                 #else//if is not android the game will continue anyway :3
                 if (finishCallback != null){
 			finishCallback();
